@@ -11,31 +11,20 @@ import { Link } from "react-router-dom";
 import Navbar from "../Navbar";
 import { Eye, Pencil, Trash2 } from "lucide-react";
 import SearchInput from "../SearchInput";
-import api from "../../services/api";
+import { searchCustomer } from "../../services/CustumersService.ts";
 import { Button } from "@/components/ui/button";
 import { DatePickerWithRange } from "../DatePicker";
-
-interface Customer {
-  id: string;
-  name: string;
-  cpf: string;
-  phoneNumber: string;
-  referenceNumber: string;
-}
+import {FIRST_PAGE_NUMBER} from "@/pages/services/types/PageType.ts";
+import {CustomerType} from "@/pages/services/types/CustomerType.ts";
 
 export default function Home() {
-  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [customers, setCustomers] = useState<CustomerType[]>([]);
 
   useEffect(() => {
-    api
-      .get("/")
-      .then((response) => {
-        setCustomers(
-          response.data.data.result.map(
-            (entry: { customer: Customer }) => entry.customer
-          )
-        );
-      })
+    searchCustomer({pageNumber: FIRST_PAGE_NUMBER})
+      .then(({ result }) =>
+          setCustomers(result.map((entry: { customer: CustomerType }) => entry.customer)
+      ))
       .catch((error) => {
         console.log(error);
       });
