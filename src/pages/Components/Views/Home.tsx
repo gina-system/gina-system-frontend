@@ -9,12 +9,19 @@ import {
 } from "@/components/ui/table";
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar";
+import ButtonIcons from "../ButtonIcons";
 import { Eye, Pencil, Trash2 } from "lucide-react";
 import SearchInput from "../SearchInput";
-import api from "../../services/api";
+import apiConfig from "../../services/apiConfig";
 import { Button } from "@/components/ui/button";
 import { DatePickerWithRange } from "../DatePicker";
+import { ButtonFilter } from "../ButtonFilter";
 
+const options = [
+  { label: "Nome", value: "nome" },
+  { label: "CPF", value: "CPF" },
+  { label: "Numero", value: "CPF" },
+];
 interface Customer {
   id: string;
   name: string;
@@ -27,14 +34,11 @@ export default function Home() {
   const [customers, setCustomers] = useState<Customer[]>([]);
 
   useEffect(() => {
-    api
+    apiConfig
       .get("/")
       .then((response) => {
-        setCustomers(
-          response.data.data.result.map(
-            (entry: { customer: Customer }) => entry.customer
-          )
-        );
+        const customer = response.data.data.customer;
+        setCustomers([customer]); 
       })
       .catch((error) => {
         console.log(error);
@@ -43,6 +47,8 @@ export default function Home() {
 
   console.log({ data: customers });
 
+  
+
   return (
     <>
       <Navbar />
@@ -50,6 +56,7 @@ export default function Home() {
         <form className="space-y-2">
           <div className="flex items-center gap-2">
             <SearchInput />
+            <ButtonFilter title="Filtrar" options={options} />
             <Button type="submit">Consultar</Button>
           </div>
           <div className="flex">
@@ -82,16 +89,16 @@ export default function Home() {
                     <TableCell>
                       <div className="flex space-x-1">
                         <Link to="/register">
-                          <button className="w-6 h-6">
+                          <ButtonIcons>
                             <Pencil className="w-5 h-5" />
-                          </button>
+                            </ButtonIcons>
                         </Link>
-                        <button className="w-6 h-6">
+                        <ButtonIcons>
                           <Trash2 className="w-5 h-5" />
-                        </button>
-                        <button className="w-6 h-6">
+                        </ButtonIcons>
+                        <ButtonIcons>
                           <Eye className="w-5 h-5" />
-                        </button>
+                        </ButtonIcons>
                       </div>
                     </TableCell>
                   </TableRow>

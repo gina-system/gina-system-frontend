@@ -9,7 +9,7 @@ export default function Navbar() {
             <img
               src={Logo}
               alt="logo"
-              className="w-[60px] h-[60px] transform scale-125 border rounded-lg"
+              className="w-[60px] h-[60px] transform scale-125 ml-5 rounded-full"
             />
           </a>
 
