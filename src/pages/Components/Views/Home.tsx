@@ -9,28 +9,39 @@ import {
 } from "@/components/ui/table";
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar";
+import ButtonIcons from "../ButtonIcons";
 import { Eye, Pencil, Trash2 } from "lucide-react";
 import SearchInput from "../SearchInput";
-import { searchCustomer } from "../../services/CustumersService.ts";
+import apiConfig from "../../services/apiConfig";
 import { Button } from "@/components/ui/button";
 import { DatePickerWithRange } from "../DatePicker";
-import {FIRST_PAGE_NUMBER} from "@/pages/services/types/PageType.ts";
 import {CustomerType} from "@/pages/services/types/CustomerType.ts";
+import { ButtonFilter } from "../ButtonFilter";
+
+const options = [
+  { label: "Nome", value: "nome" },
+  { label: "CPF", value: "CPF" },
+  { label: "Numero", value: "CPF" },
+];
 
 export default function Home() {
   const [customers, setCustomers] = useState<CustomerType[]>([]);
 
   useEffect(() => {
-    searchCustomer({pageNumber: FIRST_PAGE_NUMBER})
-      .then(({ result }) =>
-          setCustomers(result.map((entry: { customer: CustomerType }) => entry.customer)
-      ))
+    apiConfig
+      .get("/")
+      .then((response) => {
+        const customer = response.data.data.customer;
+        setCustomers([customer]);
+      })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
   console.log({ data: customers });
+
+
 
   return (
     <>
@@ -39,6 +50,7 @@ export default function Home() {
         <form className="space-y-2">
           <div className="flex items-center gap-2">
             <SearchInput />
+            <ButtonFilter title="Filtrar" options={options} />
             <Button type="submit">Consultar</Button>
           </div>
           <div className="flex">
@@ -71,16 +83,16 @@ export default function Home() {
                     <TableCell>
                       <div className="flex space-x-1">
                         <Link to="/register">
-                          <button className="w-6 h-6">
+                          <ButtonIcons>
                             <Pencil className="w-5 h-5" />
-                          </button>
+                            </ButtonIcons>
                         </Link>
-                        <button className="w-6 h-6">
+                        <ButtonIcons>
                           <Trash2 className="w-5 h-5" />
-                        </button>
-                        <button className="w-6 h-6">
+                        </ButtonIcons>
+                        <ButtonIcons>
                           <Eye className="w-5 h-5" />
-                        </button>
+                        </ButtonIcons>
                       </div>
                     </TableCell>
                   </TableRow>
