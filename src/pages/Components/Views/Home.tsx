@@ -12,11 +12,12 @@ import Navbar from "../Navbar";
 import ButtonIcons from "../ButtonIcons";
 import { Eye, Pencil, Trash2 } from "lucide-react";
 import SearchInput from "../SearchInput";
-import apiConfig from "../../services/apiConfig";
 import { Button } from "@/components/ui/button";
 import { DatePickerWithRange } from "../DatePicker";
 import {CustomerType} from "@/pages/services/types/CustomerType.ts";
 import { ButtonFilter } from "../ButtonFilter";
+import {searchCustomer} from "@/pages/services/CustumersService.ts";
+import {FIRST_PAGE_NUMBER} from "@/pages/services/types/PageType.ts";
 
 const options = [
   { label: "Nome", value: "nome" },
@@ -28,11 +29,10 @@ export default function Home() {
   const [customers, setCustomers] = useState<CustomerType[]>([]);
 
   useEffect(() => {
-    apiConfig
-      .get("/")
+    searchCustomer({ pageNumber: FIRST_PAGE_NUMBER })
       .then((response) => {
-        const customer = response.data.data.customer;
-        setCustomers([customer]);
+        const customers = response.result.map(r => r.customer);
+        setCustomers(customers);
       })
       .catch((error) => {
         console.log(error);
