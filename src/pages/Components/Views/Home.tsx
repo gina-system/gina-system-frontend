@@ -48,7 +48,7 @@ export default function Home() {
   console.log({ data: customers });
 
   
-
+//teste
   return (
     <>
       <Navbar />
