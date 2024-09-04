@@ -41,11 +41,16 @@ export async function deleteCustomer(customerId: string): Promise<void> {
 }
 
 
-export async function findCustomersAndNotifications(searchQuery: SearchCustomerQueryParamsType): Promise<SearchCustomerResponseType> {
-    const response = await apiConfig
-        .get<DataResponseWrapper<SearchCustomerResponseType>>('/v1/customers/notifications', {
+export async function findCustomersAndNotifications(
+    customerId: string,
+    searchQuery: SearchCustomerQueryParamsType
+): Promise<SearchCustomerResponseType> {
+    const response = await apiConfig.get<DataResponseWrapper<SearchCustomerResponseType>>(
+        `/v1/customers/${customerId}/notifications`,
+        {
             params: searchQuery
-        });
+        }
+    );
 
     return response.data.data;
 }
