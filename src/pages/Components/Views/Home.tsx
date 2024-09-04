@@ -14,15 +14,15 @@ import { Eye, Pencil, Trash2 } from "lucide-react";
 import SearchInput from "../SearchInput";
 import { Button } from "@/components/ui/button";
 import { DatePickerWithRange } from "../DatePicker";
-import {CustomerType} from "@/pages/services/types/CustomerType.ts";
+import { CustomerType } from "@/pages/services/types/CustomerType.ts";
 import { ButtonFilter } from "../ButtonFilter";
-import {searchCustomer} from "@/pages/services/CustumersService.ts";
-import {FIRST_PAGE_NUMBER} from "@/pages/services/types/PageType.ts";
+import { searchCustomer } from "@/pages/services/CustumersService.ts";
+import { FIRST_PAGE_NUMBER } from "@/pages/services/types/PageType.ts";
 
 const options = [
   { label: "Nome", value: "nome" },
   { label: "CPF", value: "CPF" },
-  { label: "Numero", value: "CPF" },
+  { label: "Numero", value: "numero" },
 ];
 
 export default function Home() {
@@ -31,7 +31,7 @@ export default function Home() {
   useEffect(() => {
     searchCustomer({ pageNumber: FIRST_PAGE_NUMBER })
       .then((response) => {
-        const customers = response.result.map(r => r.customer);
+        const customers = response.result.map((r) => r.customer);
         setCustomers(customers);
       })
       .catch((error) => {
@@ -41,8 +41,7 @@ export default function Home() {
 
   console.log({ data: customers });
 
-  
-//teste
+  //teste
   return (
     <>
       <Navbar />
@@ -61,13 +60,15 @@ export default function Home() {
         <div className="border rounded-lg p-2 ">
           <Table>
             <TableHeader>
-              <TableHead>Nome</TableHead>
-              <TableHead>CPF</TableHead>
-              <TableHead>Telefone</TableHead>
-              <TableHead>N°Ref.</TableHead>
-              <TableHead>Emissão</TableHead>
-              <TableHead>Vencimento</TableHead>
-              <TableHead>Ações</TableHead>
+              <TableRow>
+                <TableHead>Nome</TableHead>
+                <TableHead>CPF</TableHead>
+                <TableHead>Telefone</TableHead>
+                <TableHead>N°Ref.</TableHead>
+                <TableHead>Emissão</TableHead>
+                <TableHead>Vencimento</TableHead>
+                <TableHead>Ações</TableHead>
+              </TableRow>
             </TableHeader>
             <TableBody>
               {customers.map((customer, i) => {
@@ -77,15 +78,22 @@ export default function Home() {
                     <TableCell>{customer.cpf}</TableCell>
                     <TableCell>{customer.phoneNumber}</TableCell>
                     <TableCell>{customer.referenceNumber}</TableCell>
-                    <TableCell>12/12/2022</TableCell>
-                    <TableCell>01/12/2024</TableCell>
+                    <TableCell>
+                      {new Date(customer.audit.createdAt).toLocaleDateString(
+                        "pt-BR",
+                        { timeZone: "UTC" }
+                      )}
+                    </TableCell>
+                    <TableCell>
+                     
+                    </TableCell>
 
                     <TableCell>
                       <div className="flex space-x-1">
                         <Link to="/register">
                           <ButtonIcons>
                             <Pencil className="w-5 h-5" />
-                            </ButtonIcons>
+                          </ButtonIcons>
                         </Link>
                         <ButtonIcons>
                           <Trash2 className="w-5 h-5" />

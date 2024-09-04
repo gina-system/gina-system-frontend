@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { addDays, format } from "date-fns";
+import {  format } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
@@ -17,10 +17,7 @@ import {
 export function DatePickerWithRange({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20),
-  });
+  const [date, setDate] = React.useState<DateRange | undefined>(undefined);
 
   return (
     <div className={cn("grid gap-2", className)}>
@@ -30,7 +27,7 @@ export function DatePickerWithRange({
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal",
+              "w-[230px] justify-start text-left font-normal",
               !date && "text-muted-foreground"
             )}
           >
@@ -38,7 +35,7 @@ export function DatePickerWithRange({
             {date?.from ? (
               date.to ? (
                 <>
-                  {format(date.from, "dd MMM y", { locale: ptBR })} -{" "}
+                  {format(date.from, "dd MMM y", { locale: ptBR })} a {" "}
                   {format(date.to, "dd MMM y", { locale: ptBR })}
                 </>
               ) : (
