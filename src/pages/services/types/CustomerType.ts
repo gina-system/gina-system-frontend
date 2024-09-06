@@ -30,6 +30,18 @@ export interface SearchCustomerQueryParamsType extends PageRequestType {
     certificateIssueDate?: string;
 }
 
+export interface CustomerWithNotificationType{
+    id?: string;
+    type?:string;
+    triggerDate?:string;
+    triggeredDate:string | null;
+    isManualTrigger?:boolean | null;
+    audit?:AuditType;
+}
+
+
 export type CustomerWrapper = { customer: CustomerType };
 
 export type SearchCustomerResponseType = PageResponseType<CustomerWrapper>;
+
+export type CustomerWithNotificationWrapper = { customer: CustomerWithNotificationType };
