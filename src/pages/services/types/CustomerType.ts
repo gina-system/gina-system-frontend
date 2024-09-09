@@ -1,7 +1,7 @@
 import {PageRequestType, PageResponseType} from "@/pages/services/types/PageType.ts";
 import {CertificateType} from "@/pages/services/types/CertificateType.ts";
 import {AuditType} from "@/pages/services/types/AuditType.ts";
-
+import {NotificationType} from "@/pages/services/types/NotificationType.ts";
 export interface CustomerType {
     id: string;
     name: string;
@@ -30,13 +30,9 @@ export interface SearchCustomerQueryParamsType extends PageRequestType {
     certificateIssueDate?: string;
 }
 
-export interface CustomerWithNotificationType{
-    id?: string;
-    type?:string;
-    triggerDate?:string;
-    triggeredDate:string | null;
-    isManualTrigger?:boolean | null;
-    audit?:AuditType;
+export interface CustomerWithNotificationType extends CustomerType{
+    notifications: NotificationType[]
+
 }
 
 
