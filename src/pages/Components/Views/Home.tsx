@@ -62,7 +62,7 @@ export default function Home() {
             <TableHeader>
               <TableRow>
                 <TableHead>Nome</TableHead>
-                <TableHead>CPF</TableHead>
+                <TableHead>Documento</TableHead>
                 <TableHead>Telefone</TableHead>
                 <TableHead>N°Ref.</TableHead>
                 <TableHead>Emissão</TableHead>
@@ -75,7 +75,7 @@ export default function Home() {
                 return (
                   <TableRow key={i}>
                     <TableCell>{customer.name}</TableCell>
-                    <TableCell>{customer.cpf}</TableCell>
+                    <TableCell>{customer.document}</TableCell>
                     <TableCell>{customer.phoneNumber}</TableCell>
                     <TableCell>{customer.referenceNumber}</TableCell>
                     <TableCell>

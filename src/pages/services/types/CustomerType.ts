@@ -5,7 +5,7 @@ import {NotificationType} from "@/pages/services/types/NotificationType.ts";
 export interface CustomerType {
     id: string;
     name: string;
-    cpf: string;
+    document: string;
     brithDate: string;
     phoneNumber: string;
     email: string;
@@ -19,7 +19,7 @@ export type NewCustomerRequestType = Omit<CustomerType, 'id'>
 export interface SearchCustomerQueryParamsType extends PageRequestType {
     id?: string;
     name?: string;
-    cpf?: string;
+    document?: string;
     brithDate?: string;
     phoneNumber?: string;
     email?: string;
